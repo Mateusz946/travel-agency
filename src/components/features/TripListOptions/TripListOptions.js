@@ -2,30 +2,37 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './TripListOptions.scss';
 
-import {Row, Col} from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 
 class TripListOptions extends React.Component {
-  handleTags(tag, checked){
-    if(checked) {
+  handleTags(tag, checked) {
+    console.log(checked);
+    if (checked) {
       console.log('Adding tag', tag);
       // TODO - use action dispatcher from props
+      this.props.filters.tags.push(tag);
+      this.props.changeTags(this.props.filters.tags);
     } else {
       console.log('Removing tag', tag);
       // TODO - use action dispatcher from props
+      const filteredTags = this.props.filters.tags.filter(element => element !== tag);
+      this.props.changeTags(filteredTags);
     }
   }
 
-  handleDuration(type, value){
-    console.log('Changing duration', type, value);
+  handleDuration(type, value) {
+    // console.log('Changing duration', type, value);
     // TODO - use action dispatcher from props
+    this.props.filters.duration[type] = parseInt(value);
+    this.props.changeDuration(this.props.filters.duration);
   }
 
-  handleSearch(phrase){
+  handleSearch(phrase) {
     this.props.changeSearchPhrase(phrase);
   }
 
-  render(){
-    const {tags, filters} = this.props;
+  render() {
+    const { tags, filters } = this.props;
     return (
       <div className={styles.component}>
         <Row around="lg">
@@ -55,7 +62,10 @@ class TripListOptions extends React.Component {
                 <div className={styles.dropdown}>
                   {Object.keys(tags).map(tag => (
                     <label key={tag} className={styles.option}>
-                      <input type='checkbox' checked={filters.tags.indexOf(tag) > -1} onChange={event => this.handleTags(tag, event.currentTarget.checked)} />
+                      {
+                        // console.log(tag, filters.tags)
+                      }
+                      <input type='checkbox' checked={filters.filteredTags && filters.filteredTags.includes(tag)} onChange={event => this.handleTags(tag, event.currentTarget.checked)} />
                       {tag}
                     </label>
                   ))}
@@ -73,6 +83,8 @@ TripListOptions.propTypes = {
   tags: PropTypes.object,
   filters: PropTypes.object,
   changeSearchPhrase: PropTypes.func,
+  changeTags: PropTypes.func,
+  changeDuration: PropTypes.func,
 };
 
 export default TripListOptions;

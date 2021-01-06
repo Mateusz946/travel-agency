@@ -1,0 +1,19 @@
+@keyframes slideIn {
+  from {
+    bottom: -200px;
+  }
+
+  to {
+    bottom: 0;
+  }
+}
+
+.switchWrapper>div {
+  position: relative;
+  bottom: -200px;
+  animation-name: slideIn;
+  animation-duration: .6s;
+  animation-delay: .5s;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
