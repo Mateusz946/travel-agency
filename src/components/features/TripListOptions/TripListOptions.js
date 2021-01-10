@@ -10,7 +10,6 @@ class TripListOptions extends React.Component {
     if (checked) {
       console.log('Adding tag', tag);
       // TODO - use action dispatcher from props
-      this.props.filters.tags.push(tag);
       this.props.changeTags(this.props.filters.tags);
     } else {
       console.log('Removing tag', tag);
@@ -21,7 +20,6 @@ class TripListOptions extends React.Component {
   }
 
   handleDuration(type, value) {
-    // console.log('Changing duration', type, value);
     // TODO - use action dispatcher from props
     this.props.filters.duration[type] = parseInt(value);
     this.props.changeDuration(this.props.filters.duration);
